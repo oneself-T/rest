@@ -1,0 +1,206 @@
+    .wrap {
+      width: 100%;
+      height: 100%;
+      padding-top: 40px;
+      box-sizing: border-box;
+      /*transform: scale(0.85);
+      -ms-transform: scale(0.85);
+      -moz-transform: scale(0.85);
+      -webkit-transform: scale(0.85);*/
+    }
+    .title {
+      position: relative;
+    }
+    .title span{
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+      font-size: 30px;
+    }
+    .title span img{
+      position: absolute;
+      top: -13px;
+      right: -19px;
+      width: 30px;
+      height: 30px;
+      transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+    }
+
+    .ranking-wrap {
+      position: relative;
+      margin-top: 70px;
+      width: 100%;
+      height: 85%;
+    }
+    #ranking {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      display: flex;
+        display: -ms-flex;
+        display: -moz-flex;
+        display: -webkit-flex;
+      flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      -moz-flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      align-items: center;
+      -ms-align-items: center;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      flex-direction: column;
+      -ms-flex-direction: column;
+      -moz-flex-direction: column;
+      -webkit-flex-direction: column;
+    }
+    #ranking li {
+      width: 50%;
+      display: flex;
+        display: -ms-flex;
+        display: -moz-flex;
+        display: -webkit-flex;
+      align-items: center;
+      -ms-align-items: center;
+      -moz-align-items: center;
+      -webkit-align-items: center;
+      justify-content: space-between;
+      -ms-justify-content: space-between;
+      -moz-justify-content: space-between;
+      -webkit-justify-content: space-between;
+      text-align: center;
+      line-height: 30px;
+      margin-bottom: 15px;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    #ranking li span:first-child{
+      padding: 0;
+    }
+
+    #ranking li span {
+      width: 16.6%;
+      text-align: center;
+    }
+    #ranking li .index {
+      width: 16.6%;
+      height: 30px;
+    }
+    .index img {
+      width: 30px;
+      height: 30px;
+    }
+    #ranking li span.article,#ranking li span.dates{
+      width: 22%;
+    }
+    .line {
+      width: 1px;
+      height: 80%;
+      background: #000;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+      -moz-transform: translate(-50%,-50%);
+      -webkit-transform: translate(-50%,-50%);
+    }
+    .indexIcon {
+      animation: show 1s;
+      -ms-animation: show 1s;
+      -moz-animation: show 1s;
+      -webkit-animation: show 1s;
+    }
+    #ranking li span.face {
+      width: 30px;
+      height: 30px;
+      /*border-radius: 50%;*/
+    }
+    .face img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    @keyframes show {
+      0%{
+        height: 0px;
+      }
+      100% {
+        height: 30px;
+      }
+    }
+    @-ms-keyframes show {
+      0%{
+        height: 0px;
+      }
+      100% {
+        height: 30px;
+      }
+    }
+    @-moz-keyframes show {
+      0%{
+        height: 0px;
+      }
+      100% {
+        height: 30px;
+      }
+    }
+    @-webkit-keyframes show {
+      0%{
+        height: 0px;
+      }
+      100% {
+        height: 30px;
+      }
+    }
+
+    @media screen and (max-width: 1106px) {
+      .wrap {
+        padding-top: 20px;
+      }
+      .title span{
+        font-size: 20px;
+      }
+      .title span img {
+        width: 25px;
+        height: 25px;
+        top: -11px;
+        right: -17px;
+      }
+      .ranking-wrap {
+        margin-top: 50px;
+      }
+      #ranking {
+        font-size: 13px;
+      }
+    }
+    @media screen and (max-width: 900px) {
+      .wrap {
+        padding-top: 20px;
+      }
+      .title span{
+        font-size: 20px;
+      }
+      .title span img {
+        width: 25px;
+        height: 25px;
+        top: -11px;
+        right: -17px;
+      }
+      .ranking-wrap {
+        margin-top: 50px;
+      }
+      #ranking {
+        font-size: 12px;
+      }
+    }
