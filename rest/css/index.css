@@ -72,6 +72,10 @@ body,html{
 .line:nth-of-type(odd){
   background-color:#efefef;
 }
+.line:not(.th):hover{
+  background-color:#ccc;
+  color:#fff;
+}
 .line .grid{
   flex:2;
   text-align:center;
@@ -81,10 +85,15 @@ body,html{
   overflow-x:hidden;
   text-overflow:ellipsis;
 }
+/* .line:hover{
+  background-color:#ccc;
+  color:#fff;
+} */
+
 .register .tips{
   position:absolute;
   width:100%;
-  height:calc(100% - 50px);
+  height:calc(100% - 53px);
   bottom:0;
   text-align:center;
   display:flex;
@@ -172,4 +181,8 @@ body,html{
 .box .active{
   color:#fff !important;
   background-color:#089701 !important;
+}
+.moveIn{
+  background-color:#ccc !important;
+  color: #fff !important;
 }

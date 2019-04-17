@@ -3,7 +3,7 @@ new Vue({
   data:{
     queryDate:{nowYear:'',nowMonth:'',nowDate:''},  // 用于查询向数据库查询记录 （年，月，日）
     currentDate:{nowYear:'',nowMonth:'',nowDate:''}, // 用于恢复今天
-    totalDate:[],   // 存放日历数据
+    totalDate:[],   // 存放日历数据    
     motionItem:[],  // 休息item
     allPersonnel:[],  // 人员
     record:[],  // 当前表记录
@@ -22,33 +22,34 @@ new Vue({
       let personnel = this.allPersonnel[row];
       let _this = this;
       // 是否是本人操作
-      if(this.name == personnel){
+      if( this.name == personnel || this.name == '黄博滔'){
         // 查找项目是否已经被人员重复签到
-        for(let i in _this.record){
-          if(_this.record[i][personnel]){
-            let existence = _this.record[i][personnel];
-            if(existence.indexOf(item) == -1){
-              _this.record[i][personnel].push(item);
-              // 只有数据被更改到才会发送请求
-              // 把打卡记录转成字符串导入数据库
-              let status = JSON.stringify(_this.record);
-              let startDate = `${this.queryDate.nowYear}-${this.queryDate.nowMonth}-${this.queryDate.nowDate} ${this.queryTime.startTime}`;
-              let endDate = `${this.queryDate.nowYear}-${this.queryDate.nowMonth}-${this.queryDate.nowDate} ${this.queryTime.endTime}`;
-              axios.post('./register.php',`status=${status}&register=register&startDate=${startDate}&endDate=${endDate}`).then(function(res){
-                if(res.data.state == '200'){
-                  _this.record = JSON.parse(res.data.record[0]['status']);
-                }else if(res.data.state == '402'){
-                  _this.record = JSON.parse(res.data.record[0]['status']);
-                  alert('已过打卡有效期');
-                }else if(res.data.state == '401'){
-                  alert('参数有误');
-                }else{
-                  alert(res.data);
-                }
-              })
-            }
-          }
+
+        let existence = _this.record[row][personnel];
+        // 判断打卡还是取消打卡
+        if(existence.indexOf(item) == -1){
+          _this.record[row][personnel].push(item);
+          
+        }else{
+          let index = existence.indexOf(item);
+          _this.record[row][personnel].splice(index,1);
         }
+
+        let status = JSON.stringify(_this.record);
+        let startDate = `${this.queryDate.nowYear}-${this.queryDate.nowMonth}-${this.queryDate.nowDate} ${this.queryTime.startTime}`;
+        let endDate = `${this.queryDate.nowYear}-${this.queryDate.nowMonth}-${this.queryDate.nowDate} ${this.queryTime.endTime}`;
+        axios.post('./register.php',`status=${status}&register=register&startDate=${startDate}&endDate=${endDate}`).then(function(res){
+          if(res.data.state == '200'){
+            _this.record = JSON.parse(res.data.record[0]['status']);
+          }else if(res.data.state == '402'){
+            _this.record = JSON.parse(res.data.record[0]['status']);
+            alert('已过打卡有效期');
+          }else if(res.data.state == '401'){
+            alert('参数有误');
+          }else{
+            alert(res.data);
+          }
+        })
       }else{
         alert('不能替他人操作');
       } 
@@ -71,7 +72,7 @@ new Vue({
     },
     // 获取每个月的所有天数数据
     days:function(){
-      let _thismonth = 42 ; 
+      let thismonth = 42 ; 
       // 获取某月份第一天周几
       let firstDay = new Date(this.queryDate.nowYear,this.queryDate.nowMonth-1,1).getDay();
       firstDay == 0 ? firstDay = 7 : firstDay;
@@ -80,7 +81,7 @@ new Vue({
       // 获取某月总天数
       let dayNumber = new Date(this.queryDate.nowYear,this.queryDate.nowMonth,0).getDate();
       
-      for(let i=1;i<=_thismonth;i++){
+      for(let i=1;i<=thismonth;i++){
         // 填补上个月剩余天数数据
         let day = lastMonth - firstDay + i;
         let dayFlag = false;
@@ -106,8 +107,8 @@ new Vue({
       let now = this.totalDate[index].now;
       let num = this.totalDate[index].num;
       if(now){
+        if(this.queryDate.nowDate != num) this.getTable();
         this.queryDate.nowDate = num;
-        this.getTable();
       }
     },
     // 上午
@@ -143,8 +144,8 @@ new Vue({
           // 获取用户名
           res.data.info != 'null' ? _this.name = res.data.info[1] : _this.name = res.data.info;
           // 创建空表
+          _this.spare = _this.record;
           _this.record = [];
-          _this.spare = _this.allPersonnel;
           _this.allPersonnel = [];
           for(let i=0;i<res.data.member.length;i++){
             let member = res.data.member[i].personnel;
@@ -158,15 +159,15 @@ new Vue({
               let len = res.data.record.length;
               if(len > 0){
                 _this.record = JSON.parse(res.data.record[0]['status']);
-                for(let i=0;i<_this.record.length;i++){
-                  for(let key in _this.record[i]){
-                    _this.allPersonnel.push(key);
-                  }
-                }
                 _this.tips = false;
               }else{
-                _this.allPersonnel = _this.spare;
+                _this.record = _this.spare;
                 _this.tips = true;
+              }
+              for(let i=0;i<_this.record.length;i++){
+                for(let key in _this.record[i]){
+                  _this.allPersonnel.push(key);
+                }
               }
             }
           })

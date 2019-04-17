@@ -76,8 +76,8 @@
 				</div>
   		</div>
   	</div>
-  	<div class="register">
-  		<div class="line">
+  	<div class="register" >
+  		<div class="line th">
 				<div class="grid personnel title">参与人员</div>
 				<div class="grid" v-for="motion in motionItem">{{motion.item}}</div>
   		</div>
@@ -90,7 +90,6 @@
 					@click="sign(row,index)"
 					:class="record[row][member].indexOf(item.item) != -1 ? 'opation' : ''"
 				>
-				<!-- {{record[row][member]}} -->
 			</div>
 			</div>
 			<div class="tips" v-if="tips">
